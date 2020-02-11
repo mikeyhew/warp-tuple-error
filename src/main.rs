@@ -8,9 +8,11 @@ async fn main() {
 }
 
 fn main_filter() -> impl warp::Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
-    warp::path("api").and(
-        warp::get()
-            .and(warp::path!("todos"))
-            .map(|| warp::reply::json(&Vec::<()>::new())),
-    )
+    warp::path("api").and(list_todos())
+}
+
+fn list_todos() -> impl warp::Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+    warp::get()
+        .and(warp::path!("todos"))
+        .map(|| warp::reply::json(&Vec::<()>::new()))
 }
